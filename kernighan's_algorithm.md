@@ -46,10 +46,22 @@ int main(){
 #### Why not Traditional way?
 In this approach, we must check each and every digit of a binary number in order to count the set bit. In 32 bit ***"int"*** veriable ***0*** is written by ***00000000000000000000000000000000***. If we want to count the set bit, we must check 32 individual digits to see if they are ***1*** or not. Is there, however, a smart algorithm that can reduce the complexity? Here comes the femous Kernighan's algorithm.
 #### 2.Kernighan's Algorithm Approch
-In this approch we have to understand what is bit masking. A mask defines which bits you want to keep, and which bits you want to clear. Masking is the act of applying a mask to a value. In this aplication we have to mask the right most set bit. Now the question is why? and how can we mask a bit?
-We can directly terget the right most set bit by RMSBM or(Right most set bit Masking). Now if we can somehow replace this bit with an unset bit or 0,then we can terget 2nd right most set bit. This proccess will continue untill the left most set bit is 0.
-#### We can replace RMSB with 0 by using binary and.
+In this approach, we must first understand what bit masking is. A mask specifies which bits should be kept and which should be cleared. The act of applying a mask to a value is known as masking. We need to mask the rightmost set bit in this application. The question now is, why? and how so?
 
+We can directly terget the right most set bit by RMSBM or(Right most set bit Masking). Now, if we can replace this bit with an unset bit or 0, we can get the second rightmost set bit. This procedure will be repeated until the leftmost set bit is set to 0.
+#### We can replace RMSB with 0 by subtracting RMSBM.
+<p align="center">
+  <img src="https://github.com/md-tuhin-hasnat/Bit-Manipulation/blob/main/1%200%200%201%201%200.png?raw=true" />
+</p>
+
+#### How to can mask Right most set bit?
+We can find the mask by using binary and (&) operations on a number with the 2s complement of itself. Now what is 2's compliment? It is simply the binary representation of a negative number. For example, 2's compliment of **"n"** is the binary form of **"-n"**. Now **n `&` -n** is the right most set bit mask.
+
+After that, We can replace the Right most Set Bit to **0** by subtracting **n `&` -n** from **n** . Ex: **n = n `-` (n `&` -n)**.
+
+In **C++** it is **`n -= n&(-n)`**
+
+This operation will repeat untill all digit is **0**. And the the number of repeatation is equal to the number of set bit in that numebr.
 #### C++ Code Example (Kernighan's Algorithm)
 ```C++
 #include <bits/stdc++.h>
@@ -71,3 +83,6 @@ int main(){
 ##### Output:
 		3
 		
+#### Beginer Level Problem related to this algorithm
+1. [Raising Bacteria](https://codeforces.com/problemset/problem/579/A) <- Codeforces
+2. [Kernighan's Algorithm Test](https://www.pepcoding.com/resources/data-structures-and-algorithms-in-java-levelup/bit-manipulation/kernighans-algo-official/ojquestion) <- Pepcoding
